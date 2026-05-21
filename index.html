@@ -1,0 +1,61 @@
+# ICA Maxi Östersund — Solenergi Dashboard
+
+Realtidsdashboard för Sigenergy SigenStor, hostad på Netlify.  
+Byggd av Solenergi Norr.
+
+## Filstruktur
+
+```
+ica-solar-dashboard/
+├── index.html                    ← Dashboard (frontend)
+├── netlify.toml                  ← Netlify-konfiguration
+├── netlify/
+│   └── functions/
+│       └── sigen.js              ← Serverless proxy (API-nycklar stannar här)
+└── README.md
+```
+
+## Deploy-instruktion
+
+### 1. Lägg upp på GitHub
+```bash
+git init
+git add .
+git commit -m "initial"
+git remote add origin https://github.com/DITT-KONTO/ica-solar-dashboard.git
+git push -u origin main
+```
+
+### 2. Koppla till Netlify
+1. netlify.com → "Add new site" → "Import an existing project"
+2. Välj GitHub-repot
+
+### 3. Sätt miljövariabler i Netlify
+Site settings → Environment variables → Add:
+
+| Variabel         | Värde                          |
+|------------------|-------------------------------|
+| SIGEN_APP_KEY    | Din App Key från developer.sigencloud.com |
+| SIGEN_APP_SECRET | Din App Secret                |
+| SIGEN_SYSTEM_ID  | System ID från mySigen-appen  |
+
+### 4. Skaffa Sigenergy API-uppgifter
+- Logga in på https://developer.sigencloud.com
+- Control Center → Settings → generera App Key + App Secret
+- System ID: mySigen-appen → Settings → ...
+
+### 5. Redeploy
+Netlify → Deploys → "Trigger deploy"
+
+## Så funkar det
+
+- **API-nycklar** ligger aldrig i frontend-koden. De läses av `netlify/functions/sigen.js`
+  server-side och exponeras aldrig i webbläsaren.
+- **Nordpool** (spotpris SE2) hämtas direkt från elprisetjustnu.se — öppet API, ingen nyckel.
+- **Demo-läge** aktiveras automatiskt om env-variablerna saknas, så sidan fungerar
+  att titta på direkt utan keys.
+- Polling: var 5:e minut (Sigenergy tillåter 1 anrop/endpoint/5 min).
+
+## TV-skärm
+Öppna dashboardens URL i Chrome i fullscreen-läge (F11).  
+Sidan är designad för 1920×1080.
