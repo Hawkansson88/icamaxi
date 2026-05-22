@@ -312,7 +312,11 @@ async function fetchTelemetry() {
 
 async function fetchSpot() {
   try {
-    const r = await fetch('https://www.elprisetjustnu.se/api/v1/prices/SE2.json');
+    const now = new Date();
+    const year = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const r = await fetch(`https://www.elprisetjustnu.se/api/v1/prices/${year}/${mm}-${dd}_SE2.json`);
     if (!r.ok) return null;
     const items = await r.json();
     const h = new Date().getHours();
