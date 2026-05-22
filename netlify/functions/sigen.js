@@ -42,7 +42,8 @@ exports.handler = async () => {
     });
     const data = await r.json();
     return { statusCode: 200, headers, body: JSON.stringify(data) };
-  } catch (err) {
-    return { statusCode: 502, headers, body: JSON.stringify({ error: err.message }) };
+} catch (err) {
+    // Returnera demo istället för att krascha dashboarden
+    return { statusCode: 200, headers, body: JSON.stringify({ demo: true, reason: err.message }) };
   }
 };
