@@ -1,7 +1,3 @@
-// Netlify Function: history.js
-// Hämtar veckoproduktion från Sigenergy Historical Data API
-// GET /.netlify/functions/history → returnerar 7 dagars produktionsdata
-
 const SIGEN_USERNAME = process.env.SIGEN_USERNAME;
 const SIGEN_PASSWORD = process.env.SIGEN_PASSWORD;
 const SIGEN_SYSTEM_ID = process.env.SIGEN_SYSTEM_ID;
@@ -35,14 +31,14 @@ exports.handler = async () => {
     return { statusCode: 200, headers, body: JSON.stringify({ demo: true }) };
   }
 
-try {
+  try {
     const token = await getToken();
     const now = new Date();
     const date = now.toISOString().split('T')[0];
     const url = `${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/history?level=Week&date=${date}`;
-    
+
     console.log('HISTORY URL:', url);
-    
+
     const r = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -60,8 +56,28 @@ try {
     const raw = data.data;
     const items = raw.itemList || [];
     console.log('ITEMS COUNT:', items.length, 'RAW KEYS:', Object.keys(raw));
-    
-catch (err) {
+
+    const dayMap = {};
+    items.forEach(item => {
+      const day = item.dataTime ? item.dataTime.split(' ')[0] : null;
+      if (!day) return;
+      const val = item.powerGeneration || 0;
+      if (val > 0) dayMap[day] = val;
+    });
+
+    const days = Object.keys(dayMap).sort();
+    const values = days.map(d => parseFloat(dayMap[d].toFixed(1)));
+    const svDay = ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'];
+    const labels = days.map(d => svDay[new Date(d).getDay()]);
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ labels, values, raw: dayMap })
+    };
+
+  } catch (err) {
+    console.log('HISTORY ERROR:', err.message);
     return {
       statusCode: 200,
       headers,
