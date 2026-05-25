@@ -42,11 +42,10 @@ exports.handler = async () => {
       'Content-Type': 'application/json'
     };
 
-    // Hämta summary och energyFlow parallellt
-    const [summaryRes, flowRes] = await Promise.all([
-      fetch(`${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/summary`, { headers: authHeaders }),
-      fetch(`${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/energyFlow`, { headers: authHeaders })
-    ]);
+// Hämta summary först, sedan energyFlow
+    const summaryRes = await fetch(`${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/summary`, { headers: authHeaders });
+    await new Promise(r => setTimeout(r, 1000));
+    const flowRes = await fetch(`${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/energyFlow`, { headers: authHeaders });
 
     const summaryJson = await summaryRes.json();
     const flowJson    = await flowRes.json();
