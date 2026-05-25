@@ -10,7 +10,7 @@ let tokenExpiry = 0;
 
 async function getToken() {
   if (cachedToken && Date.now() < tokenExpiry) return cachedToken;
-  const r = await fetch(`${BASE}/oauth/token`, {
+  const r = await fetch(`${BASE}/openapi/auth/login/account`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: SIGEN_USERNAME, password: SIGEN_PASSWORD })
