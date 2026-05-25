@@ -15,14 +15,15 @@ async function getToken() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: SIGEN_USERNAME, password: SIGEN_PASSWORD })
   });
-  const data = await r.json();
-  if (data.code !== 0) throw new Error(`Auth failed: ${data.msg}`);
+  const text = await r.text();
+  console.log('SIGEN AUTH RESPONSE:', text);
+  const data = JSON.parse(text);
+  if (data.code !== 0) throw new Error(`Auth failed: ${data.msg} | raw: ${text}`);
   const parsed = typeof data.data === 'string' ? JSON.parse(data.data) : data.data;
   cachedToken = parsed.accessToken;
   tokenExpiry = Date.now() + (parsed.expiresIn - 300) * 1000;
   return cachedToken;
 }
-
 const headers = {
   'Access-Control-Allow-Origin': '*',
   'Content-Type': 'application/json'
@@ -43,7 +44,6 @@ exports.handler = async () => {
     const data = await r.json();
     return { statusCode: 200, headers, body: JSON.stringify(data) };
 } catch (err) {
-    // Returnera demo istället för att krascha dashboarden
     return { statusCode: 200, headers, body: JSON.stringify({ demo: true, reason: err.message }) };
   }
 };
