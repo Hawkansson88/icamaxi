@@ -45,7 +45,7 @@
   .chart-wrap { position: relative; flex: 1; min-height: 0; }
 
   .flow-card { grid-column: span 2; display: flex; flex-direction: column; }
-  .flow-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .flow-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
   .flow-node { border-radius: 13px; padding: 14px 18px; display: flex; flex-direction: column; justify-content: space-between; }
   .fn-solar { background: linear-gradient(135deg, #fff8e6, #fef3cd); border: 1px solid #fde68a; }
   .fn-grid  { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; }
@@ -153,11 +153,8 @@
           <div class="fn-label">Solpaneler</div>
           <div><div class="fn-val" id="flow-pv">–<span class="fn-unit">kW</span></div><div class="fn-sub">Producerar</div></div>
         </div>
-        <div class="flow-node fn-bat">
-          <div class="fn-label">Batteri</div>
-          <div><div class="fn-val" id="flow-bat">–<span class="fn-unit">%</span></div><div class="fn-sub" id="bat-sub">SOC</div></div>
-        </div>
-        <div class="flow-node fn-grid">
+       
+       <div class="flow-node fn-grid">
           <div class="fn-label">Elnätet</div>
           <div><div class="fn-val" id="flow-grid">–<span class="fn-unit">kW</span></div><div class="fn-sub" id="grid-sub">–</div></div>
         </div>
@@ -166,12 +163,8 @@
 
     <!-- BATTERI -->
     <div class="card">
-      <div class="card-label">Batteri & Produktion</div>
+      <div class="card-label">Produktion</div>
       <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
-        <div class="bar-section">
-          <div class="bar-label-row"><span>Batteri (SOC)</span><span style="font-weight:500;color:#16a34a;" id="soc-pct">–%</span></div>
-          <div class="bar-track"><div class="bar-fill-green" id="soc-bar" style="width:0%"></div></div>
-        </div>
         <div class="stat-box">
           <div><div class="stat-item-label">Denna månad</div><div class="stat-item-val" id="pv-month">–</div></div>
           <div style="text-align:right;"><div class="stat-item-label">Totalt sedan start</div><div class="stat-item-val" id="pv-total">–</div></div>
