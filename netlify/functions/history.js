@@ -57,13 +57,13 @@ exports.handler = async () => {
     const raw = data.data;
     const items = raw.itemList || [];
 
-    // Gruppera per dag och summera powerGeneration
+// Ta sista powerGeneration-värdet per dag (kumulativt dagsvärde)
     const dayMap = {};
     items.forEach(item => {
       const day = item.dataTime ? item.dataTime.split(' ')[0] : null;
       if (!day) return;
-      if (!dayMap[day]) dayMap[day] = 0;
-      dayMap[day] += (item.powerGeneration || 0);
+      const val = item.powerGeneration || 0;
+      if (val > 0) dayMap[day] = val; // behåll högsta/sista värdet
     });
 
     // Sortera dagar och bygg array
