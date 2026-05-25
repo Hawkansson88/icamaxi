@@ -276,7 +276,7 @@ async function fetchStats() {
     if (!r.ok) return null;
     const d = await r.json();
     if (d.demo || d.error) return null;
-    return typeof d.data === 'string' ? JSON.parse(d.data) : d.data;
+    return { summary: d.summary, flow: d.flow };
   } catch { return null; }
 }
 
@@ -308,7 +308,7 @@ function apply(stats, tele, hist) {
   const co2Life = stats.lifetimeCo2            || 0;
   const trees   = Math.round(stats.lifetimeTreeEquivalent || 0);
 
-  document.getElementById('pv-now').textContent      = f1((tele.pv_power_w || 0) / 1000);
+  document.getElementById('pv-now').textContent = f1(flow.pvPower || flow.pv_power_w / 1000 || 0);
   document.getElementById('pv-today').textContent    = f1(pvDay) + ' kWh';
   document.getElementById('kpi-co2').innerHTML       = Math.round(pvDay * 0.42) + '<span class="kpi-unit">kg</span>';
   document.getElementById('kpi-co2-lifetime').textContent = co2Life.toFixed(1);
@@ -338,9 +338,9 @@ async function refresh() {
   const [rawStats, rawTele, hist] = await Promise.all([
     fetchStats(), fetchTelemetry(), fetchHistory()
   ]);
-  const stats = rawStats || demoStats();
-  const tele  = rawTele  || demoTelemetry();
-  apply(stats, tele, hist);
+  const summary = rawStats?.summary || demoStats();
+const flow    = rawStats?.flow    || demoTelemetry();
+apply(summary, flow, hist);
 }
 
 refresh();
