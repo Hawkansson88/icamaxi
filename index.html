@@ -313,14 +313,12 @@ function apply(stats, tele, spotOre) {
 
   document.getElementById('pv-now').innerHTML  = f1(pvKw) + '<span class="kpi-unit">kW</span>';
   document.getElementById('flow-pv').innerHTML = f1(pvKw) + '<span class="fn-unit">kW</span>';
-  document.getElementById('flow-bat').innerHTML = soc + '<span class="fn-unit">%</span>';
+
 
   const gridAbs = Math.abs(grid);
   document.getElementById('flow-grid').innerHTML = f1(gridAbs) + '<span class="fn-unit">kW</span>';
   document.getElementById('grid-sub').textContent = grid < -0.05 ? '↑ Exporterar till nät' : '↓ Importerar från nät';
 
-  document.getElementById('soc-pct').textContent = soc + '%';
-  document.getElementById('soc-bar').style.width  = soc + '%';
 
   const now = new Date();
   document.getElementById('last-time').textContent = now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
