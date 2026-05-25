@@ -35,7 +35,7 @@ exports.handler = async () => {
     const token = await getToken();
     const now = new Date();
     const date = now.toISOString().split('T')[0];
-    const url = `${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/history?level=Week&date=${date}`;
+    const url = `${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/history?level=Month&date=${date}`;
 
     console.log('HISTORY URL:', url);
 
