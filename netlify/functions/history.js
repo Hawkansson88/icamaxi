@@ -50,17 +50,20 @@ exports.handler = async () => {
     const text = await r.text();
     console.log('HISTORY RESPONSE:', text.substring(0, 500));
 
-    const data = JSON.parse(text);
+const data = JSON.parse(text);
     if (data.code !== 0) throw new Error(`API error: ${data.msg}`);
 
-    const raw = data.data;
+    // data.data är en JSON-sträng — parsa den
+    const raw = typeof data.data === 'string' ? JSON.parse(data.data) : data.data;
     const items = raw.itemList || [];
-    console.log('ITEMS COUNT:', items.length, 'RAW KEYS:', Object.keys(raw));
+    console.log('ITEMS COUNT:', items.length);
 
     const dayMap = {};
     items.forEach(item => {
-      const day = item.dataTime ? item.dataTime.split(' ')[0] : null;
-      if (!day) return;
+      if (!item.dataTime) return;
+      // Format: "20260525 00:00" → "2026-05-25"
+      const dt = item.dataTime.split(' ')[0];
+      const day = dt.slice(0,4) + '-' + dt.slice(4,6) + '-' + dt.slice(6,8);
       const val = item.powerGeneration || 0;
       if (val > 0) dayMap[day] = val;
     });
