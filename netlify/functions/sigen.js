@@ -35,7 +35,7 @@ exports.handler = async () => {
   }
   try {
     const token = await getToken();
-    const r = await fetch(`${BASE}/system/realtime?systemId=${SIGEN_SYSTEM_ID}`, {
+    const r = await fetch(`${BASE}/openapi/auth/login/password`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
