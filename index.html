@@ -331,7 +331,7 @@ function apply(stats, tele, spotOre, hist) {
     const days = ['Mån','Tis','Ons','Tor','Fre','Lör','Sön'];
     renderChart(days, [380, 420, 310, 450, 390, 410, Math.round(pvDay)]);
   }
-
+}
 async function fetchHistory() {
   try {
     const r = await fetch('/.netlify/functions/history');
