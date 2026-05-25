@@ -12,7 +12,6 @@
   html, body { height: 100%; background: #f0f4f8; color: #1a2332; font-family: 'Inter', sans-serif; overflow: hidden; }
   .dash { display: grid; grid-template-rows: auto 1fr; height: 100vh; }
 
-  /* TOP BAR */
   .top-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 64px; background: #fff; border-bottom: 1px solid #e8edf2; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
   .logo-block { display: flex; align-items: center; gap: 14px; }
   .ica-badge { background: #e2001a; color: #fff; font-weight: 700; font-size: 20px; letter-spacing: 1px; padding: 4px 14px; border-radius: 6px; }
@@ -26,14 +25,11 @@
   .clock-time { font-size: 24px; font-weight: 300; color: #1a2332; letter-spacing: 1px; line-height: 1; }
   .clock-date { font-size: 11px; color: #8a9ab0; margin-top: 2px; }
 
-  /* MAIN */
   .main { padding: 18px 24px 14px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; grid-template-rows: auto 1fr; gap: 14px; overflow: hidden; }
 
-  /* CARD */
   .card { background: #fff; border-radius: 16px; padding: 20px 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04); display: flex; flex-direction: column; }
   .card-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #8a9ab0; margin-bottom: 10px; }
 
-  /* KPI */
   .kpi-icon-wrap { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0; }
   .icon-green { background: #eaf7ec; }
   .icon-amber { background: #fef6e4; }
@@ -44,53 +40,40 @@
   .kpi-sub { margin-top: 8px; font-size: 12px; color: #8a9ab0; }
   .kpi-sub .up { color: #2a8a3e; font-weight: 500; }
 
-  /* CHART */
   .chart-card { grid-column: span 2; }
   .chart-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-  .chart-legend { display: flex; gap: 14px; }
-  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #8a9ab0; font-weight: 500; }
-  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
   .chart-wrap { position: relative; flex: 1; min-height: 0; }
 
-  /* FLOW */
   .flow-card { grid-column: span 2; display: flex; flex-direction: column; }
-  .flow-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .flow-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
   .flow-node { border-radius: 13px; padding: 14px 18px; display: flex; flex-direction: column; justify-content: space-between; }
   .fn-solar { background: linear-gradient(135deg, #fff8e6, #fef3cd); border: 1px solid #fde68a; }
   .fn-grid  { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; }
   .fn-bat   { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #bbf7d0; }
-  .fn-load  { background: linear-gradient(135deg, #fdf4ff, #f3e8ff); border: 1px solid #e9d5ff; }
   .fn-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.55; }
   .fn-solar .fn-label { color: #92400e; }
   .fn-grid  .fn-label { color: #1e40af; }
   .fn-bat   .fn-label { color: #166534; }
-  .fn-load  .fn-label { color: #6b21a8; }
   .fn-val { font-size: clamp(20px, 2.5vw, 34px); font-weight: 300; line-height: 1; margin-top: 6px; }
   .fn-solar .fn-val { color: #b45309; }
   .fn-grid  .fn-val { color: #1d4ed8; }
   .fn-bat   .fn-val { color: #15803d; }
-  .fn-load  .fn-val { color: #7e22ce; }
   .fn-unit { font-size: 13px; opacity: 0.6; margin-left: 2px; }
   .fn-sub { font-size: 11px; opacity: 0.5; margin-top: 3px; }
 
-  /* BARS */
   .bar-section { margin-top: 14px; }
   .bar-label-row { display: flex; justify-content: space-between; font-size: 12px; color: #8a9ab0; margin-bottom: 5px; }
   .bar-track { height: 7px; background: #f0f4f8; border-radius: 4px; overflow: hidden; }
   .bar-fill-green { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #4ade80, #16a34a); transition: width 1.2s ease; }
-  .bar-fill-blue  { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #60a5fa, #2563eb); transition: width 1.2s ease; }
 
-  /* CO2 */
   .co2-row { display: flex; gap: 12px; margin-top: 8px; flex: 1; }
   .co2-item { flex: 1; background: #f8fafc; border-radius: 11px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; }
   .co2-item-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a9ab0; }
   .co2-item-val { font-size: clamp(18px, 2vw, 28px); font-weight: 300; color: #1a2332; margin-top: 6px; line-height: 1; }
   .co2-item-unit { font-size: 11px; color: #8a9ab0; margin-top: 3px; }
 
-  /* SPOT */
   .spot-val { font-size: clamp(30px, 3.5vw, 52px); font-weight: 300; color: #d4860a; line-height: 1; margin-top: 12px; }
 
-  /* STAT BOX */
   .stat-box { background: #f8fafc; border-radius: 11px; padding: 12px 14px; margin-top: 10px; display: flex; justify-content: space-between; }
   .stat-item-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8a9ab0; }
   .stat-item-val { font-size: clamp(14px, 1.6vw, 20px); font-weight: 300; color: #1a2332; margin-top: 4px; }
@@ -122,7 +105,7 @@
 
   <div class="main">
 
-    <!-- KPI 1: Produktion nu (från telemetri) -->
+    <!-- KPI 1: Produktion nu -->
     <div class="card">
       <div class="card-label">Solproduktion just nu</div>
       <div class="kpi-icon-wrap icon-green">☀️</div>
@@ -130,7 +113,7 @@
       <div class="kpi-sub">Idag totalt: <span class="up" id="pv-today">–</span></div>
     </div>
 
-    <!-- KPI 2: Intjäning (statistik × spotpris) -->
+    <!-- KPI 2: Intjäning -->
     <div class="card">
       <div class="card-label">Intjänat idag</div>
       <div class="kpi-icon-wrap icon-amber">💰</div>
@@ -138,7 +121,7 @@
       <div class="kpi-sub">Denna månad: <span class="up" id="kpi-month-sek">–</span> kr</div>
     </div>
 
-    <!-- KPI 3: CO2 idag -->
+    <!-- KPI 3: CO2 -->
     <div class="card">
       <div class="card-label">CO₂-besparing idag</div>
       <div class="kpi-icon-wrap icon-teal">🌿</div>
@@ -154,29 +137,21 @@
       <div class="kpi-sub" style="font-size:11px; color:#b0bec5; margin-top:8px;">Källa: Nordpool · timuppdatering</div>
     </div>
 
-    <!-- CHART: 7 dagar -->
+    <!-- CHART: 7 dagar (bara produktion) -->
     <div class="card chart-card">
       <div class="chart-header">
-        <div class="card-label" style="margin-bottom:0">Produktion & Förbrukning — 7 dagar</div>
-        <div class="chart-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Produktion</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Förbrukning</div>
-        </div>
+        <div class="card-label" style="margin-bottom:0">Solproduktion — senaste 7 dagarna (kWh)</div>
       </div>
       <div class="chart-wrap"><canvas id="weekChart"></canvas></div>
     </div>
 
-    <!-- FLOW -->
+    <!-- FLOW: Sol, Batteri, Nät (ingen butik utan smartmeter) -->
     <div class="card flow-card">
       <div class="card-label">Energiflöde just nu</div>
       <div class="flow-grid">
         <div class="flow-node fn-solar">
           <div class="fn-label">Solpaneler</div>
           <div><div class="fn-val" id="flow-pv">–<span class="fn-unit">kW</span></div><div class="fn-sub">Producerar</div></div>
-        </div>
-        <div class="flow-node fn-load">
-          <div class="fn-label">Butiken</div>
-          <div><div class="fn-val" id="flow-load">–<span class="fn-unit">kW</span></div><div class="fn-sub">Förbrukar</div></div>
         </div>
         <div class="flow-node fn-bat">
           <div class="fn-label">Batteri</div>
@@ -189,15 +164,11 @@
       </div>
     </div>
 
-    <!-- SJÄLVFÖRSÖRJNING + BATTERI -->
+    <!-- BATTERI -->
     <div class="card">
-      <div class="card-label">Självförsörjning & Batteri</div>
-      <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:0;">
+      <div class="card-label">Batteri & Produktion</div>
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
         <div class="bar-section">
-          <div class="bar-label-row"><span>Självförsörjning idag</span><span style="font-weight:500;color:#2563eb;" id="self-pct">–%</span></div>
-          <div class="bar-track"><div class="bar-fill-blue" id="self-bar" style="width:0%"></div></div>
-        </div>
-        <div class="bar-section" style="margin-top:18px;">
           <div class="bar-label-row"><span>Batteri (SOC)</span><span style="font-weight:500;color:#16a34a;" id="soc-pct">–%</span></div>
           <div class="bar-track"><div class="bar-fill-green" id="soc-bar" style="width:0%"></div></div>
         </div>
@@ -235,7 +206,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// ── Klocka ──────────────────────────────────────────────────────────────────
 function tickClock() {
   const now = new Date();
   document.getElementById('clock').textContent =
@@ -246,9 +216,8 @@ function tickClock() {
 tickClock();
 setInterval(tickClock, 1000);
 
-// ── Chart ────────────────────────────────────────────────────────────────────
 let weekChart = null;
-function renderChart(labels, prod, cons) {
+function renderChart(labels, prod) {
   const ctx = document.getElementById('weekChart').getContext('2d');
   if (weekChart) weekChart.destroy();
   weekChart = new Chart(ctx, {
@@ -256,8 +225,7 @@ function renderChart(labels, prod, cons) {
     data: {
       labels,
       datasets: [
-        { label: 'Produktion', data: prod, borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.08)', borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#16a34a', fill: true, tension: 0.4 },
-        { label: 'Förbrukning', data: cons, borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.06)', borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#2563eb', fill: true, tension: 0.4 }
+        { label: 'Produktion', data: prod, borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,0.08)', borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#16a34a', fill: true, tension: 0.4 }
       ]
     },
     options: {
@@ -271,37 +239,32 @@ function renderChart(labels, prod, cons) {
   });
 }
 
-// ── Demo-data ────────────────────────────────────────────────────────────────
 function demoStats() {
   return {
-    dailyPowerGeneration: 186.4,
-    monthlyPowerGeneration: 3240,
-    annualPowerGeneration: 18420,
-    lifetimePowerGeneration: 48320,
-    lifetimeCo2: 0.66,
-    lifetimeTreeEquivalent: 36
+    dailyPowerGeneration: 399.6,
+    monthlyPowerGeneration: 26557,
+    lifetimePowerGeneration: 153880,
+    lifetimeCo2: 73.09,
+    lifetimeTreeEquivalent: 99
   };
 }
 
 function demoTelemetry() {
-  const pv   = parseFloat((42.3 + (Math.random()-0.5)*6).toFixed(1));
-  const load = parseFloat((35   + (Math.random()-0.5)*4).toFixed(1));
+  const pv = parseFloat((42.3 + (Math.random()-0.5)*6).toFixed(1));
   return {
     pv_power_w: pv * 1000,
-    inverter_active_power_w: load * 1000,
     storage_soc: 78,
-    grid_active_power_w: (pv - load) * 1000,
-    storage_charge_discharge_w: -1200
+    grid_active_power_w: (pv - 36) * 1000
   };
 }
 
-// ── API-anrop ────────────────────────────────────────────────────────────────
 async function fetchStats() {
   try {
     const r = await fetch('/.netlify/functions/sigen');
     if (!r.ok) return null;
     const d = await r.json();
-    return (d.demo || d.error) ? null : d.data || null;
+    if (d.demo || d.error) return null;
+    return typeof d.data === 'string' ? JSON.parse(d.data) : d.data;
   } catch { return null; }
 }
 
@@ -329,69 +292,56 @@ async function fetchSpot() {
   } catch { return null; }
 }
 
-// ── Applicera ────────────────────────────────────────────────────────────────
 function apply(stats, tele, spotOre) {
   const f1 = v => parseFloat(v).toFixed(1);
   const ore = spotOre || 62;
 
-  // Statistik (kWh, CO2)
   const pvDay   = stats.dailyPowerGeneration   || 0;
   const pvMonth = stats.monthlyPowerGeneration  || 0;
   const pvTotal = stats.lifetimePowerGeneration || 0;
   const co2Life = stats.lifetimeCo2            || 0;
   const trees   = Math.round(stats.lifetimeTreeEquivalent || 0);
 
-  document.getElementById('pv-today').textContent  = f1(pvDay) + ' kWh';
-  document.getElementById('pv-month').textContent  = Math.round(pvMonth) + ' kWh';
-  document.getElementById('pv-total').textContent  = Math.round(pvTotal) + ' kWh';
-  document.getElementById('kpi-sek').innerHTML     = Math.round(pvDay * ore / 100).toLocaleString('sv-SE') + '<span class="kpi-unit">kr</span>';
+  document.getElementById('pv-today').textContent      = f1(pvDay) + ' kWh';
+  document.getElementById('pv-month').textContent      = Math.round(pvMonth).toLocaleString('sv-SE') + ' kWh';
+  document.getElementById('pv-total').textContent      = Math.round(pvTotal).toLocaleString('sv-SE') + ' kWh';
+  document.getElementById('kpi-sek').innerHTML         = Math.round(pvDay * ore / 100).toLocaleString('sv-SE') + '<span class="kpi-unit">kr</span>';
   document.getElementById('kpi-month-sek').textContent = Math.round(pvMonth * ore / 100).toLocaleString('sv-SE');
-  document.getElementById('kpi-co2').innerHTML     = Math.round(pvDay * 0.42) + '<span class="kpi-unit">kg</span>';
-  document.getElementById('kpi-co2-lifetime').textContent = co2Life.toFixed(2);
-  document.getElementById('co2-month').textContent = Math.round(pvMonth * 0.42);
-  document.getElementById('kpi-trees').textContent = trees;
+  document.getElementById('kpi-co2').innerHTML         = Math.round(pvDay * 0.42) + '<span class="kpi-unit">kg</span>';
+  document.getElementById('kpi-co2-lifetime').textContent = co2Life.toFixed(1);
+  document.getElementById('co2-month').textContent     = Math.round(pvMonth * 0.42).toLocaleString('sv-SE');
+  document.getElementById('kpi-trees').textContent     = trees;
 
-  if (spotOre) document.getElementById('spot-price').textContent = spotOre;
+  if (spotOre !== null) document.getElementById('spot-price').textContent = spotOre;
 
-  // Telemetri (live kW, SOC)
-  const pvKw   = tele.pv_power_w / 1000;
-  const loadKw = Math.abs(tele.inverter_active_power_w) / 1000;
-  const soc    = Math.round(tele.storage_soc || 0);
-  const grid   = tele.grid_active_power_w / 1000;
-  const selfUse = loadKw > 0 ? Math.min(100, Math.round((pvKw / loadKw) * 100)) : 0;
+  const pvKw  = (tele.pv_power_w || 0) / 1000;
+  const soc   = Math.round(tele.storage_soc || 0);
+  const grid  = (tele.grid_active_power_w || 0) / 1000;
 
-  document.getElementById('pv-now').innerHTML   = f1(pvKw) + '<span class="kpi-unit">kW</span>';
-  document.getElementById('flow-pv').innerHTML  = f1(pvKw) + '<span class="fn-unit">kW</span>';
-  document.getElementById('flow-load').innerHTML = f1(loadKw) + '<span class="fn-unit">kW</span>';
-  document.getElementById('flow-bat').innerHTML  = soc + '<span class="fn-unit">%</span>';
+  document.getElementById('pv-now').innerHTML  = f1(pvKw) + '<span class="kpi-unit">kW</span>';
+  document.getElementById('flow-pv').innerHTML = f1(pvKw) + '<span class="fn-unit">kW</span>';
+  document.getElementById('flow-bat').innerHTML = soc + '<span class="fn-unit">%</span>';
 
   const gridAbs = Math.abs(grid);
   document.getElementById('flow-grid').innerHTML = f1(gridAbs) + '<span class="fn-unit">kW</span>';
   document.getElementById('grid-sub').textContent = grid < -0.05 ? '↑ Exporterar till nät' : '↓ Importerar från nät';
 
-  document.getElementById('soc-pct').textContent  = soc + '%';
+  document.getElementById('soc-pct').textContent = soc + '%';
   document.getElementById('soc-bar').style.width  = soc + '%';
-  document.getElementById('self-pct').textContent = selfUse + '%';
-  document.getElementById('self-bar').style.width = selfUse + '%';
 
-  // Tid
   const now = new Date();
   document.getElementById('last-time').textContent = now.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
   document.getElementById('last-date').textContent = now.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' });
 
-  // Demo-chart (ersätts med historisk data när Historical Data-API är känt)
+  // Demo-chart med riktiga dagens värde sist
   const days = ['Mån','Tis','Ons','Tor','Fre','Lör','Sön'];
-  renderChart(days, [145,201,178,230,195,210,Math.round(pvDay)], [310,290,320,280,300,260,290]);
+  renderChart(days, [380, 420, 310, 450, 390, 410, Math.round(pvDay)]);
 }
 
-// ── Huvud-refresh ────────────────────────────────────────────────────────────
 async function refresh() {
   const [rawStats, rawTele, spotOre] = await Promise.all([
-    fetchStats(),
-    fetchTelemetry(),
-    fetchSpot()
+    fetchStats(), fetchTelemetry(), fetchSpot()
   ]);
-
   const stats = rawStats || demoStats();
   const tele  = rawTele  || demoTelemetry();
   apply(stats, tele, spotOre);
