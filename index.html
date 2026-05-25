@@ -285,7 +285,7 @@ async function fetchSpot() {
   } catch { return null; }
 }
 
-function apply(stats, tele, spotOre) {
+function apply(stats, tele, spotOre, hist) {
   const f1 = v => parseFloat(v).toFixed(1);
   const ore = spotOre || 62;
 
@@ -325,17 +325,29 @@ function apply(stats, tele, spotOre) {
   document.getElementById('last-date').textContent = now.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' });
 
   // Demo-chart med riktiga dagens värde sist
-  const days = ['Mån','Tis','Ons','Tor','Fre','Lör','Sön'];
-  renderChart(days, [380, 420, 310, 450, 390, 410, Math.round(pvDay)]);
+  if (hist && hist.labels && hist.values) {
+    renderChart(hist.labels, hist.values);
+  } else {
+    const days = ['Mån','Tis','Ons','Tor','Fre','Lör','Sön'];
+    renderChart(days, [380, 420, 310, 450, 390, 410, Math.round(pvDay)]);
+  }
+
+async function fetchHistory() {
+  try {
+    const r = await fetch('/.netlify/functions/history');
+    if (!r.ok) return null;
+    const d = await r.json();
+    return (d.demo || d.error) ? null : d;
+  } catch { return null; }
 }
 
 async function refresh() {
-  const [rawStats, rawTele, spotOre] = await Promise.all([
-    fetchStats(), fetchTelemetry(), fetchSpot()
+  const [rawStats, rawTele, spotOre, hist] = await Promise.all([
+    fetchStats(), fetchTelemetry(), fetchSpot(), fetchHistory()
   ]);
   const stats = rawStats || demoStats();
   const tele  = rawTele  || demoTelemetry();
-  apply(stats, tele, spotOre);
+  apply(stats, tele, spotOre, hist);
 }
 
 refresh();
