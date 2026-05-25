@@ -68,10 +68,11 @@ const data = JSON.parse(text);
       if (val > 0) dayMap[day] = val;
     });
 
-    const days = Object.keys(dayMap).sort();
-    const values = days.map(d => parseFloat(dayMap[d].toFixed(1)));
+    const allDays = Object.keys(dayMap).sort();
+    const last7 = allDays.slice(-7);
+    const values = last7.map(d => parseFloat(dayMap[d].toFixed(1)));
     const svDay = ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'];
-    const labels = days.map(d => svDay[new Date(d).getDay()]);
+    const labels = last7.map(d => svDay[new Date(d).getDay()]);
 
     return {
       statusCode: 200,
