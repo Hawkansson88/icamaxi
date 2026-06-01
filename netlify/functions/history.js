@@ -32,36 +32,24 @@ exports.handler = async () => {
   }
 
   try {
-    const token = await getToken();
+const token = await getToken();
     const now = new Date();
     const date = now.toISOString().split('T')[0];
+    
+    // Hämta denna månad
     const url = `${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/history?level=Month&date=${date}`;
-
-    console.log('HISTORY URL:', url);
-
     const r = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
     });
-
-    console.log('HISTORY STATUS:', r.status);
     const text = await r.text();
-    console.log('HISTORY RESPONSE:', text.substring(0, 500));
-
-const data = JSON.parse(text);
+    const data = JSON.parse(text);
     if (data.code !== 0) throw new Error(`API error: ${data.msg}`);
-
-    // data.data är en JSON-sträng — parsa den
     const raw = typeof data.data === 'string' ? JSON.parse(data.data) : data.data;
     const items = raw.itemList || [];
-    console.log('ITEMS COUNT:', items.length);
 
     const dayMap = {};
     items.forEach(item => {
       if (!item.dataTime) return;
-      // Format: "20260525 00:00" → "2026-05-25"
       const dt = item.dataTime.split(' ')[0];
       const day = dt.slice(0,4) + '-' + dt.slice(4,6) + '-' + dt.slice(6,8);
       const val = item.powerGeneration || 0;
@@ -69,17 +57,41 @@ const data = JSON.parse(text);
     });
 
     const allDays = Object.keys(dayMap).sort();
-    const last7 = allDays.slice(-7);
+    
+    // Ta bort idag om dagen inte är slut (före 23:00)
+    const todayStr = date;
+    const hour = now.getHours();
+    const daysToUse = (hour < 23 && allDays[allDays.length-1] === todayStr)
+      ? allDays.slice(0, -1)
+      : allDays;
+    
+    // Om vi har färre än 7 dagar denna månad, hämta även förra månaden
+    let finalDays = daysToUse;
+    if (daysToUse.length < 7) {
+      const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString().split('T')[0];
+      const url2 = `${BASE}/openapi/systems/${SIGEN_SYSTEM_ID}/history?level=Month&date=${prevDate}`;
+      await new Promise(res => setTimeout(res, 1000));
+      const r2 = await fetch(url2, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+      });
+      const data2 = await r2.json();
+      const raw2 = typeof data2.data === 'string' ? JSON.parse(data2.data) : data2.data;
+      const items2 = raw2.itemList || [];
+      items2.forEach(item => {
+        if (!item.dataTime) return;
+        const dt = item.dataTime.split(' ')[0];
+        const day = dt.slice(0,4) + '-' + dt.slice(4,6) + '-' + dt.slice(6,8);
+        const val = item.powerGeneration || 0;
+        if (val > 0) dayMap[day] = val;
+      });
+      const allDays2 = Object.keys(dayMap).sort();
+      finalDays = allDays2.filter(d => d !== todayStr || hour >= 23);
+    }
+
+    const last7 = finalDays.slice(-7);
     const values = last7.map(d => parseFloat(dayMap[d].toFixed(1)));
     const svDay = ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'];
     const labels = last7.map(d => svDay[new Date(d).getDay()]);
-
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ labels, values, raw: dayMap })
-    };
-
   } catch (err) {
     console.log('HISTORY ERROR:', err.message);
     return {
