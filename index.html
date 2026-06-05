@@ -233,7 +233,8 @@ function apply(summary, flow, hist) {
   // Veckoproduktion från historik-data (summera alla dagar)
   const pvWeek = hist && hist.values
     ? Math.round(hist.values.reduce((a, b) => a + b, 0))
-    : 0;
+    : (window._lastPvWeek || 0);
+  if (pvWeek > 0) window._lastPvWeek = pvWeek;
 
   document.getElementById('pv-now').textContent       = f1(pvNow);
   document.getElementById('pv-today').textContent     = f1(pvDay) + ' kWh';
@@ -258,15 +259,38 @@ function apply(summary, flow, hist) {
   }
 }
 
-async function refresh() {
-  const [rawSigen, hist] = await Promise.all([fetchSigen(), fetchHistory()]);
-  const summary = rawSigen?.summary || demoSummary();
-  const flow    = rawSigen?.flow    || demoFlow();
-  apply(summary, flow, hist);
+// Cachar senaste data så det inte försvinner vid rate limit
+let _lastSummary = null;
+let _lastFlow = null;
+let _lastHist = null;
+
+async function refreshSigen() {
+  const rawSigen = await fetchSigen();
+  if (rawSigen) {
+    _lastSummary = rawSigen.summary;
+    _lastFlow    = rawSigen.flow;
+  }
+  const summary = _lastSummary || demoSummary();
+  const flow    = _lastFlow    || demoFlow();
+  apply(summary, flow, _lastHist);
 }
 
-refresh();
-setInterval(refresh, 5 * 60 * 1000);
+async function refreshHistory() {
+  const hist = await fetchHistory();
+  if (hist) _lastHist = hist;
+  const summary = _lastSummary || demoSummary();
+  const flow    = _lastFlow    || demoFlow();
+  apply(summary, flow, _lastHist);
+}
+
+// Starta båda direkt, men med 10 sek fördröjning på history
+refreshSigen();
+setTimeout(() => {
+  refreshHistory();
+  setInterval(refreshHistory, 30 * 60 * 1000); // history var 30:e minut
+}, 10000);
+
+setInterval(refreshSigen, 5 * 60 * 1000); // sigen var 5:e minut
 </script>
 </body>
 </html>
